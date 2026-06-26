@@ -32,8 +32,8 @@ with col1:
     name = st.text_input("👤 Enter Your Name")
     age = st.slider("Age", 18, 65, 30)
     gender = st.selectbox("Gender", ["Male", "Female"])
-    education = st.selectbox("Education Level", ["Bachelor's", "Master's", "PhD"])
-
+    education = st.selectbox("Education Level", ["Bachelor's", "Master's", 'PhD', "Bachelor's Degree", "Master's Degree",
+ 'High School'])
 with col2:
     experience = st.slider("Years of Experience", 0, 35, 5)
     job_title = st.text_input("Job Title", "Data Scientist")
