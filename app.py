@@ -96,7 +96,7 @@ if st.button("🚀 Predict Salary"):
 
 # Model prediction (This is your monthly salary from the dataset)
     with st.spinner("Analyzing profile..."):
-        monthly = float(model.predict(sample))
+        monthly = float(model.predict(sample)[0])
 
     # Calculate yearly and daily salaries correctly
     prediction = monthly * 12
