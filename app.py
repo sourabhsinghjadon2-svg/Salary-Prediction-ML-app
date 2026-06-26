@@ -94,15 +94,12 @@ if st.button("🚀 Predict Salary"):
         "Years of Experience": [experience]
     })
 
-# Model prediction
+# Model prediction (This is your monthly salary from the dataset)
     with st.spinner("Analyzing profile..."):
-        prediction_usd = float(model.predict(sample)[0])
+        monthly = float(model.predict(sample))
 
-    # Convert USD base data to INR ($1 = ₹85)
-    prediction = prediction_usd * 85
-
-    # Calculate monthly and daily salaries accurately
-    monthly = prediction / 12
+    # Calculate yearly and daily salaries correctly
+    prediction = monthly * 12
     daily = prediction / 365
 
     # Show results
