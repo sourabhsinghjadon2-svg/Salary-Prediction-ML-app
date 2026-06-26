@@ -118,7 +118,7 @@ if st.button("🚀 Predict Salary"):
     # Salary comparison chart
     comparison = pd.DataFrame({
         "Category": ["Average Salary", "Your Salary"],
-        "Salary": [115327, prediction]
+        "Salary": [115327 * 12, prediction]
     })
 
     st.subheader("📊 Salary Comparison")
