@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import joblib
+import plotly.express as px
 
 # Load Model
 model = joblib.load("best_salary_model.pkl")
@@ -116,24 +117,50 @@ if st.button("🚀 Predict Salary"):
         st.metric("☀ Daily Salary", f"₹{daily:,.0f}")
 
     # Salary comparison chart
+    st.subheader("📊 Salary Comparison")
+    
+    # Create the modern dataframe
     comparison = pd.DataFrame({
         "Category": ["Average Salary", "Your Salary"],
         "Salary": [115327 * 12, prediction]
     })
 
-    st.subheader("📊 Salary Comparison")
-    st.bar_chart(comparison.set_index("Category"))
+    # Build an interactive, stylized bar chart
+    fig = px.bar(
+        comparison, 
+        x="Category", 
+        y="Salary", 
+        color="Category",
+        # Custom premium palette: Cool gray for average, bright success teal for the user
+        color_discrete_map={"Average Salary": "#64748B", "Your Salary": "#00CC96"},
+        text=comparison["Salary"].apply(lambda x: f"₹{x:,.0f}")  # Shows values directly on top of bars
+    )
+
+    # Style adjustments for a clean, scannable UI
+    fig.update_traces(textposition="outside", hovertemplate="<b>%{x}</b><br>Salary: ₹%{y:,.0f}<extra></extra>")
+    fig.update_layout(
+        showlegend=False,
+        margin=dict(l=20, r=20, t=20, b=20),
+        height=350,
+        xaxis_title="",
+        yaxis_title="Salary (₹)",
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)"
+    )
+
+    # Display the beautiful chart
+    st.plotly_chart(fig, use_container_width=True, config={"displayModeBar": False})
 
     # Progress bar
-    salary_percent = min(prediction / 250000, 1.0)
+    salary_percent = min(prediction / 3000000, 1.0)
 
     st.subheader("📈 Salary Level")
     st.progress(float(salary_percent))
 
     # Feedback message
-    if prediction > 150000:
+    if prediction > 1500000:
         st.success("🚀 Excellent earning potential!")
-    elif prediction > 80000:
+    elif prediction > 600000:
         st.info("📈 Strong salary range.")
     else:
         st.warning("📚 Upskilling could increase your salary.")
